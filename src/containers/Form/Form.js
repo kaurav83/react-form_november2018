@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Form.css';
 import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 
 class Form extends Component {
     loginHandler() {
@@ -22,9 +23,13 @@ class Form extends Component {
                     <h1>Авторизация</h1>
 
                     <form onSubmit={this.submitHandler} className={classes.FormAuth}>
-                        <input type="text" />
-                        <input type="text" />
-
+                        <Input 
+                            label="Email" 
+                        />
+                        <Input 
+                            label="Пароль"
+                            errorMessage={'TEST'}
+                        />
                         <Button
                             type="success" 
                             onClick={this.loginHandler}
