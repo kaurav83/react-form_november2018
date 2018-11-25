@@ -12,6 +12,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state={
+            isFormValid: false,
             formControls: {
                 email: {
                     value: '',
@@ -81,12 +82,19 @@ class Form extends Component {
 
         control.value = event.target.value;
         control.touched = true;
+        control.valid = this.validateControl(control.value, control.validation);
 
         formControls[controlName] = control;
 
-        control.valid = this.validateControl(control.value, control.validation);
+        let isFormValid = true;
+
+        Object.keys(formControls).forEach(name => {
+            isFormValid = formControls[name].valid && isFormValid;
+        });
+
         this.setState({
-            formControls
+            formControls,
+            isFormValid
         })
     }
 
@@ -121,11 +129,13 @@ class Form extends Component {
                         <Button
                             type="success" 
                             onClick={this.loginHandler}
+                            disabled={!this.state.isFormValid}
                         >Войти</Button>
 
                         <Button
                             type="primary" 
                             onClick={this.registerHandler}
+                            disabled={!this.state.isFormValid}
                         >Зарегистрироваться</Button>
                     </form>
                 </div>
